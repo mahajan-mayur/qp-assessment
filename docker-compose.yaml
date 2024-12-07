@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: eP7qTAdyTboRotD
+      MYSQL_DATABASE: grocerydb
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: AHexOO45qLjWNNj
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/grocerydb
+      SPRING_DATASOURCE_USERNAME: appuser
+      SPRING_DATASOURCE_PASSWORD: AHexOO45qLjWNNj
+    depends_on:
+      - mysql
+
+
+
+volumes:
+  mysql-data:
